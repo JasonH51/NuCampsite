@@ -26,7 +26,7 @@ function RenderComments({ comments }) {
               <span>{comments.text}</span>
               <br />
               <span>
-                -- {comments.author}
+                -- {comments.author} At{" "}
                 {new Intl.DateTimeFormat("en-US", { year: "numeric", month: "short", day: "2-digit" }).format(
                   new Date(Date.parse(comments.date))
                 )}
