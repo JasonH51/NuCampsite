@@ -87,10 +87,10 @@ class Contact extends Component {
                 <Col md={10}>
                   <Control.text
                     model=".firstName"
-                    className="form-control"
                     id="firstName"
                     name="firstName"
                     placeholder="First Name"
+                    className="form-control"
                     validators={{
                       required,
                       minLength: minLength(2),
@@ -117,10 +117,10 @@ class Contact extends Component {
                 <Col md={10}>
                   <Control.text
                     model=".lastName"
-                    className="form-control"
                     id="lastName"
                     name="lastName"
                     placeholder="Last Name"
+                    className="form-control"
                     validators={{
                       required,
                       minLength: minLength(2),
@@ -147,10 +147,10 @@ class Contact extends Component {
                 <Col md={10}>
                   <Control.text
                     model=".phoneNum"
-                    className="form-control"
                     id="phoneNum"
                     name="phoneNum"
                     placeholder="Phone number"
+                    className="form-control"
                     validators={{
                       required,
                       minLength: minLength(10),
@@ -160,7 +160,7 @@ class Contact extends Component {
                   />
                   <Errors
                     className="text-danger"
-                    model=".firstName"
+                    model=".phoneNum"
                     show="touched"
                     component="div"
                     messages={{
@@ -179,10 +179,10 @@ class Contact extends Component {
                 <Col md={10}>
                   <Control.text
                     model=".email"
-                    className="form-control"
                     id="email"
                     name="email"
                     placeholder="Email"
+                    className="form-control"
                     validators={{
                       required,
                       validEmail,
