@@ -9,7 +9,14 @@ import Contact from "./ContactComponent";
 import { Switch, Route, Redirect, withRouter } from "react-router-dom";
 import { connect } from "react-redux";
 import { actions } from "react-redux-form";
-import { postComment, fetchCampsites, fetchComments, fetchPromotions } from "../redux/ActionCreators";
+import {
+  postComment,
+  fetchCampsites,
+  fetchComments,
+  fetchPromotions,
+  fetchPartners,
+  postFeedback,
+} from "../redux/ActionCreators";
 import { TransitionGroup, CSSTransition } from "react-transition-group";
 
 const mapStateToProps = (state) => {
@@ -27,6 +34,8 @@ const mapDispatchToProps = {
   resetFeedbackForm: () => actions.reset("feedbackForm"),
   fetchComments: () => fetchComments(),
   fetchPromotions: () => fetchPromotions(),
+  fetchPartners: () => fetchPartners(),
+  postFeedback: () => postFeedback(),
 };
 
 class Main extends Component {
@@ -34,6 +43,7 @@ class Main extends Component {
     this.props.fetchCampsites();
     this.props.fetchComments();
     this.props.fetchPromotions();
+    this.props.fetchPartners();
   }
   render() {
     const HomePage = () => {
@@ -45,7 +55,9 @@ class Main extends Component {
           promotion={this.props.promotions.promotions.filter((promotion) => promotion.featured)[0]}
           promotionLoading={this.props.promotions.isLoading}
           promotionErrMess={this.props.promotions.errMess}
-          partner={this.props.partners.filter((partner) => partner.featured)[0]}
+          partner={this.props.partners.partners.filter((partner) => partner.featured)[0]}
+          partnersLoading={this.props.partners.isLoading}
+          partnersFailed={this.props.partners.errMess}
         />
       );
     };
@@ -63,6 +75,14 @@ class Main extends Component {
       );
     };
 
+    const ContactWithProps = () => {
+      return <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />;
+    };
+
+    const AboutWithProps = () => {
+      return;
+    };
+
     return (
       <div>
         <Header />
@@ -72,12 +92,18 @@ class Main extends Component {
               <Route path="/home" component={HomePage} />
               <Route exact path="/directory" render={() => <Directory campsites={this.props.campsites} />} />
               <Route path="/directory/:campsiteId" component={CampsiteWithId} />
-              <Route exact path="/aboutus" render={() => <About partners={this.props.partners} />} />
               <Route
                 exact
-                path="/contactus"
-                render={() => <Contact resetFeedbackForm={this.props.resetFeedbackForm} />}
+                path="/aboutus"
+                render={() => (
+                  <About
+                    partners={this.props.partners.partners}
+                    isLoading={this.props.partners.isLoading}
+                    errMess={this.props.partners.errMess}
+                  />
+                )}
               />
+              <Route exact path="/contactus" component={ContactWithProps} />
               <Redirect to="/home" />
             </Switch>
           </CSSTransition>
