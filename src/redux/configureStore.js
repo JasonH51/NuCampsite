@@ -7,6 +7,7 @@ import { Comments } from "./comments";
 import { Partners } from "./partners";
 import { Promotions } from "./promotions";
 import { InitialFeedback } from "./forms";
+import { Feedback } from "./feedback";
 
 export const ConfigureStore = () => {
   const store = createStore(
@@ -15,6 +16,7 @@ export const ConfigureStore = () => {
       comments: Comments,
       partners: Partners,
       promotions: Promotions,
+      // feedback: Feedback,
       ...createForms({
         feedbackForm: InitialFeedback,
       }),

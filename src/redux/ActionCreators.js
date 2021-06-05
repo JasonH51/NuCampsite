@@ -71,12 +71,12 @@ export const fetchComments = () => (dispatch) => {
 };
 
 export const commentsFailed = (errMess) => ({
-  type: actionTypes.COMMENTS_FAILED,
+  type: ActionTypes.COMMENTS_FAILED,
   payload: errMess,
 });
 
 export const addComments = (comments) => ({
-  type: actionTypes.ADD_COMMENTS,
+  type: ActionTypes.ADD_COMMENTS,
   payload: comments,
 });
 
@@ -246,23 +246,11 @@ export const fetchPartners = () => (dispatch) => {
 //     });
 // };
 
-export const postFeedback = (firstName, lastName, phoneNum, email, agree, contactType, feedback, id) => {
-  const newFeedback = {
-    firstName,
-    lastName,
-    phoneNum,
-    email,
-    agree,
-    contactType,
-    feedback,
-    id,
-  };
-  newFeedback.date = new Date().toISOString();
-
+export const postFeedback = (feedback) => (dispatch) => {
   return (
     fetch(baseUrl + "feedback", {
       method: "POST",
-      body: JSON.stringify(newFeedback),
+      body: JSON.stringify(feedback),
       headers: {
         "Content-Type": "application/json",
       },
@@ -270,7 +258,7 @@ export const postFeedback = (firstName, lastName, phoneNum, email, agree, contac
       .then(
         (response) => {
           if (response.ok) {
-            return response, alert(`Thank you for your feedback.`), console.log(newFeedback);
+            return response, alert(`Thank you for your feedback.` + feedback);
           } else {
             const error = new Error(`Error ${response.status}: ${response.statusText}`);
             error.response = response;
@@ -282,10 +270,11 @@ export const postFeedback = (firstName, lastName, phoneNum, email, agree, contac
           throw errMess;
         }
       )
+      .then((response) => response.json())
       // .then((response) => dispatch(addFeedback(response)))
       .catch((error) => {
         console.log("post feedback", error.message);
-        alert("Your feedback could not be posted/nError:" + error.message);
+        alert("Your feedback could not be posted Error:" + error.message);
       })
   );
 };

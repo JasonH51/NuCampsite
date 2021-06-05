@@ -32,15 +32,7 @@ class Contact extends Component {
   }
 
   handleSubmit(values) {
-    this.props.postFeedback(
-      values.firstName,
-      values.lastName,
-      values.phoneNum,
-      values.email,
-      values.agree,
-      values.contactType,
-      values.feedback
-    );
+    this.props.postFeedback(values);
     this.props.resetFeedbackForm();
   }
 
