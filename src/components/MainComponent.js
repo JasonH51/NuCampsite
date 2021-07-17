@@ -36,7 +36,7 @@ const mapDispatchToProps = {
   fetchComments: () => fetchComments(),
   fetchPromotions: () => fetchPromotions(),
   fetchPartners: () => fetchPartners(),
-  postFeedback: () => postFeedback(),
+  postFeedback: (feedback) => postFeedback(feedback),
 };
 
 class Main extends Component {
@@ -78,10 +78,6 @@ class Main extends Component {
 
     const ContactWithProps = () => {
       return <Contact resetFeedbackForm={this.props.resetFeedbackForm} postFeedback={this.props.postFeedback} />;
-    };
-
-    const AboutWithProps = () => {
-      return;
     };
 
     return (

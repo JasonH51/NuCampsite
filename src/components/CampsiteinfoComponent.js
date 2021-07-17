@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React, {Component} from 'react';
 import {
   Card,
   CardImg,
@@ -9,23 +9,27 @@ import {
   Button,
   Label,
   Modal,
-  ModalHeader,
-} from "reactstrap";
-import { Link } from "react-router-dom";
-import { Control, LocalForm, Errors } from "react-redux-form";
-import ModalBody from "reactstrap/lib/ModalBody";
-import { Loading } from "./LoadingComponent";
-import { baseUrl } from "../shared/baseUrl";
-import { FadeTransform, Fade, Stagger } from "react-animation-components";
+  ModalHeader
+} from 'reactstrap';
+import {Link} from 'react-router-dom';
+import {Control, LocalForm, Errors} from 'react-redux-form';
+import ModalBody from 'reactstrap/lib/ModalBody';
+import {Loading} from './LoadingComponent';
+import {baseUrl} from '../shared/baseUrl';
+import {FadeTransform, Fade, Stagger} from 'react-animation-components';
 
-const required = (val) => val && val.length;
-const maxLength = (len) => (val) => !val || val.length <= len;
-const minLength = (len) => (val) => val && val.length >= len;
+const required = val => val && val.length;
+const maxLength = len => val => !val || val.length <= len;
+const minLength = len => val => val && val.length >= len;
 
-function RenderCampsite({ campsite }) {
+function RenderCampsite({campsite}) {
   return (
     <div className="col-md-5 m-1">
-      <FadeTransform in className="col m-1" transformProps={{ exitTransform: "scale(.05) translateY(-50%)" }}>
+      <FadeTransform
+        in
+        className="col m-1"
+        transformProps={{exitTransform: 'scale(.05) translateY(-50%)'}}
+      >
         <div>
           <Card>
             <CardImg top src={baseUrl + campsite.image} alt={campsite.name} />
@@ -39,23 +43,25 @@ function RenderCampsite({ campsite }) {
   );
 }
 
-function RenderComments({ comments, postComment, campsiteId }) {
+function RenderComments({comments, postComment, campsiteId}) {
   if (comments) {
     return (
       <div className="col-md-5 m-1">
         <h4>Comments</h4>
         <Stagger in>
-          {comments.map((comments) => {
+          {comments.map(comments => {
             return (
               <Fade in key={comments.id}>
                 <div>
                   <p>
                     {comments.text}
                     <br />
-                    -- {comments.author},{" "}
-                    {new Intl.DateTimeFormat("en-US", { year: "numeric", month: "short", day: "2-digit" }).format(
-                      new Date(Date.parse(comments.date))
-                    )}
+                    -- {comments.author},{' '}
+                    {new Intl.DateTimeFormat('en-US', {
+                      year: 'numeric',
+                      month: 'short',
+                      day: '2-digit'
+                    }).format(new Date(Date.parse(comments.date)))}
                   </p>
                 </div>
               </Fade>
@@ -74,14 +80,14 @@ class CommentForm extends Component {
   constructor(props) {
     super(props);
 
-    this.state = { isModalOpen: false };
+    this.state = {isModalOpen: false};
 
     this.handleModal = this.handleModal.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleModal() {
-    this.setState({ isModalOpen: !this.state.isModalOpen });
+    this.setState({isModalOpen: !this.state.isModalOpen});
   }
 
   handleSubmit(values) {
@@ -98,7 +104,7 @@ class CommentForm extends Component {
         <Modal isOpen={this.state.isModalOpen} toggle={this.handleModal}>
           <ModalHeader toggle={this.handleModal}>Submit Comment</ModalHeader>
           <ModalBody>
-            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+            <LocalForm onSubmit={values => this.handleSubmit(values)}>
               <div className="form-group">
                 <Label htmlFor="rating">Rating</Label>
                 <Control.select model=".rating" className="form-control" id="rating" name="rating">
@@ -119,7 +125,7 @@ class CommentForm extends Component {
                   validators={{
                     required,
                     minLength: minLength(2),
-                    maxLength: maxLength(15),
+                    maxLength: maxLength(15)
                   }}
                 />
                 <Errors
@@ -128,15 +134,21 @@ class CommentForm extends Component {
                   show="touched"
                   component="div"
                   messages={{
-                    required: "Required",
-                    minLength: "Must be at least 2 characters",
-                    maxLength: "Must be 15 characters or less",
+                    required: 'Required',
+                    minLength: 'Must be at least 2 characters',
+                    maxLength: 'Must be 15 characters or less'
                   }}
                 />
               </div>
               <div className="form-group">
                 <Label htmlFor="text">Comment</Label>
-                <Control.textarea model=".text" className="form-control" id="text" name="text" rows="6" />
+                <Control.textarea
+                  model=".text"
+                  className="form-control"
+                  id="text"
+                  name="text"
+                  rows="6"
+                />
               </div>
               <Button type="submit" color="primary">
                 Submit
@@ -187,7 +199,11 @@ function CampsiteInfo(props) {
         </div>
         <div className="row">
           <RenderCampsite campsite={props.campsite} />
-          <RenderComments comments={props.comments} postComment={props.postComment} campsiteId={props.campsite.id} />
+          <RenderComments
+            comments={props.comments}
+            postComment={props.postComment}
+            campsiteId={props.campsite.id}
+          />
         </div>
       </div>
     );

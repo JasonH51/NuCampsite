@@ -7,7 +7,7 @@ import { Comments } from "./comments";
 import { Partners } from "./partners";
 import { Promotions } from "./promotions";
 import { InitialFeedback } from "./forms";
-import { Feedback } from "./feedback";
+// import { Feedback } from "./feedback";
 
 export const ConfigureStore = () => {
   const store = createStore(
